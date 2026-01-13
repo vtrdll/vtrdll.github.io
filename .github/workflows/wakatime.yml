@@ -23,9 +23,9 @@ jobs:
         env:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: |
-          mkdir -p docs/stats
+          mkdir -p pages/stats
           curl -s -H "Authorization: Basic $(echo -n $WAKATIME_API_KEY | base64)" \
-            https://wakatime.com/api/v1/users/current/stats/all_time \
+            https://wakatime.com/api/v1/users/current/stats/all_time\
             | jq '{
                 total_hours: (.data.total_seconds / 3600 | floor),
                 languages: [.data.languages[] | {name, hours: (.total_seconds / 3600 | floor)}],
