@@ -1,0 +1,31 @@
+name: Update WakaTime Stats
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # a cada 6 horas
+  workflow_dispatch:
+
+jobs:
+  wakatime:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch WakaTime stats
+        env:
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+        run: |
+          mkdir -p docs/stats
+          curl -s \
+            -H "Authorization: Basic $(echo -n "$WAKATIME_API_KEY:" | base64)" \
+            https://wakatime.com/api/v1/users/current/stats/all_time \
+            | jq '{
+                total_hours: (.data.total_seconds / 3600 | floor),
+                languages: [.data.languages[] | {
+                  name,
+                  hours: (.total_seconds / 3600 | floor)
+                }],
+                last_update: now | todate
+              }' > docs/stats/waka

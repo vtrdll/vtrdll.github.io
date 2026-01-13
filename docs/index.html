@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio | João Vitor</title>
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #38bdf8;
+}
+
+.light {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #020617;
+  --muted: #475569;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .3s;
+}
+
+/* CONTROLS */
+.top-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+button {
+  background: var(--card);
+  border: none;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  min-height: 25vh;
+  background:
+    linear-gradient(rgba(2,6,23,.8), rgba(2,6,23,.8)),
+    url("assets/bg.jpg") center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 25px rgba(56,189,248,.6);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 3.2rem;
+}
+
+.hero span {
+  color: var(--primary);
+}
+
+.hero p {
+  color: var(--muted);
+  margin: 15px 0;
+}
+
+.social a {
+  color: var(--text);
+  margin: 0 10px;
+  font-size: 1.6rem;
+}
+
+/* SECTIONS */
+section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 18px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: .6s;
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SKILLS */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+}
+
+.skill {
+  text-align: center;
+}
+
+.skill i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+/* PROJECTS */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 25px;
+}
+
+.project h3 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.project p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.project-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #020617;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(56,189,248,.4);
+}
+
+footer {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+.first-section {
+  padding-top: 40px;
+}
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clock i {
+  color: var(--primary);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: .6; }
+  50% { opacity: 1; }
+  100% { opacity: .6; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-controls">
+  <button onclick="toggleTheme()">🌗</button>
+  <button onclick="toggleLang()">🌍</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <img src="assets/profile_pic.jfif" class="profile-pic">
+    <h1>João <span>Vitor</span></h1>
+    <p id="subtitle">Desenvolvedor Backend • Python • Django</p>
+    <div class="social">
+      <a href="https://github.com/vtrdll" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/vtrdll/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:vitordossantos99@hotmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- CODING STATS -->
+<section class="first-section">
+  <h2 id="code-title">Atividade de Código</h2>
+  <div class="card reveal">
+    <h3 id="coding-hours">—</h3>
+    <p id="coding-subtitle"></p>
+
+    <ul id="languages" style="margin-top:20px;line-height:1.8"></ul>
+
+    <small id="last-update" style="color:var(--muted)"></small>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section>
+  <h2 id="about-title">Sobre mim</h2>
+  <div class="card reveal" id="about-text">
+    Desenvolvedor backend focado em Python e Django, criando APIs, aplicações web e projetos práticos. Fazendo oque precisa ser feito e sempre em busca de manter  consistência e aprimoramento nas minhas habilidades
+  </div>
+</section>
+
+
+
+<!-- SKILLS -->
+<section>
+  <h2>Tecnologias</h2>
+  <div class="skills">
+    <div class="card skill reveal"><i class="fab fa-python"></i><p>Python</p></div>
+    <div class="card skill reveal"><i class="fas fa-server"></i><p>Django / DRF</p></div>
+    <div class="card skill reveal"><i class="fab fa-docker"></i><p>Docker</p></div>
+    <div class="card skill reveal"><i class="fab fa-git-alt"></i><p>Git</p></div>
+  </div>
+</section>
+  
+
+
+<!-- PROJECTS -->
+<section>
+  <h2 id="proj-title">Projetos</h2>
+  <div class="projects" id="projects"></div>
+</section>
+
+<footer>© 2026 • João Vitor</footer>
+
+<script>
+/* THEME */
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+
+/* REVEAL */
+function observeReveal() {
+  document.querySelectorAll(".reveal").forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add("show");
+    }
+  });
+}
+window.addEventListener("scroll", observeReveal);
+
+/* LANGUAGE */
+let currentLang = "pt";
+
+const projectDescriptions = {
+  "crossfit_social": {
+    pt: "Projeto desenvolvido como teste de conhecimento, com o objetivo de criar um blog voltado para o universo do CrossFit. A ideia surgiu da união entre a prática esportiva e o desenvolvimento web, permitindo aplicar e demonstrar conceitos técnicos em um projeto realista.",
+    en: "Project developed as a knowledge test, with the goal of creating a blog focused on the CrossFit universe. The idea emerged from the combination of sports practice and web development, allowing the application and demonstration of technical concepts in a realistic project."
+  },
+
+  "desafio_lacrei": {
+  "pt": "Desafio Técnico - API REST de consultas médicas com foco em segurança e ambiente de produção.",
+  "en": " Technical Challenge - Medical appointment REST API focused on security and production readiness."
+  },
+
+  "datasetprefs": {
+    pt: "API REST criada com Django Rest Framework.",
+    en: "REST API built with Django Rest Framework."
+  },
+
+  
+};
+
+const aboutText = {
+  pt: "Desenvolvedor backend focado em Python e Django, criando APIs, aplicações web e projetos práticos. Fazendo oque precisa ser feito e sempre em busca de manter  consistência e aprimoramento nas minhas habilidades",
+  en: "Backend developer focused on Python and Django, creating APIs, web applications, and practical projects. Doing what needs to be done and always striving to maintain consistency and improve my skills."
+};
+
+const codingText = {
+  pt: {
+    title: "Atividade de Código",
+    subtitle: "Horas reais monitoradas automaticamente pelo WakaTime"
+  },
+  en: {
+    title: "Coding Activity",
+    subtitle: "Real coding hours automatically tracked by WakaTime"
+  }
+};
+
+
+function toggleLang() {
+  currentLang = currentLang === "pt" ? "en" : "pt";
+
+  document.getElementById("about-title").innerText =
+    currentLang === "pt" ? "Sobre mim" : "About";
+
+  document.getElementById("exp-title").innerText =
+    currentLang === "pt" ? "Experiência" : "Experience";
+
+  document.getElementById("proj-title").innerText =
+    currentLang === "pt" ? "Projetos" : "Projects";
+
+  document.getElementById("subtitle").innerText =
+    currentLang === "pt"
+      ? "Desenvolvedor Backend • Python • Django"
+      : "Backend Developer • Python • Django";
+  
+  document.getElementById("about-text").innerText = aboutText[currentLang];
+  document.querySelector("#exp-title + .card").innerText = experienceText[currentLang];
+
+  document.getElementById("code-title").innerText =
+  codingText[currentLang].title;
+  document.getElementById("coding-subtitle").innerText =
+    codingText[currentLang].subtitle;
+
+  renderProjects();
+  loadWakaTime();
+}
+
+/* GITHUB API */
+let reposCache = [];
+
+function renderProjects() {
+  const container = document.getElementById("projects");
+  container.innerHTML = "";
+
+  reposCache.forEach(repo => {
+    const desc =
+      projectDescriptions[repo.name]?.[currentLang] ||
+      repo.description ||
+      (currentLang === "pt" ? "Sem descrição" : "No description");
+
+    container.innerHTML += `
+      <div class="card reveal project">
+        <h3>${repo.name}</h3>
+        <p>${desc}</p>
+        <div class="project-actions">
+          <a href="${repo.html_url}" target="_blank" class="btn">GitHub</a>
+        </div>
+      </div>
+    `;
+  });
+
+  observeReveal();
+}
+
+fetch("https://api.github.com/users/vtrdll/repos")
+  .then(res => res.json())
+  .then(data => {
+    reposCache = data
+      .filter(repo =>
+        !repo.fork &&
+        repo.name !== "vtrdll.github.io"
+      )
+      .filter(repo =>
+        !repo.fork &&
+        repo.name !== "vtrdll"
+      )
+      .slice(0, 6);
+
+    renderProjects();
+  });
+
+  function animateCounter(el, start, end, duration = 1500) {
+  let startTime = null;
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    const value = Math.floor(progress * (end - start) + start);
+    el.innerHTML = `
+      <span class="clock">
+        <i class="fa-regular fa-clock"></i>
+        +${value}h
+      </span>
+    `;
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+  function loadWakaTime() {
+  fetch("stats/wakatime.json")
+    .then(res => res.json())
+    .then(data => {
+      animateCounter(
+  document.getElementById("coding-hours"),
+  0,
+  data.total_hours
+);
+
+      const ul = document.getElementById("languages");
+      ul.innerHTML = "";
+
+      data.languages.slice(0, 5).forEach(lang => {
+        ul.innerHTML += `<li>⚙️ ${lang.name} — ${lang.hours}h</li>`;
+      });
+
+      document.getElementById("last-update").innerText =
+        `Última atualização: ${new Date(data.last_update).toLocaleDateString()}`;
+    })
+    .catch(() => {
+      document.getElementById("coding-hours").innerText =
+        currentLang === "pt"
+          ? "Dados indisponíveis"
+          : "Data unavailable";
+    });
+}
+  loadWakaTime();
+</script>
+
+</body>
+</html>
