@@ -1,9 +1,0 @@
-{
-  "total_hours": 412,
-  "languages": [
-    { "name": "Python", "hours": 220 },
-    { "name": "JavaScript", "hours": 95 },
-    { "name": "HTML/CSS", "hours": 60 }
-  ],
-  "last_update": "2026-01-13"
-}
