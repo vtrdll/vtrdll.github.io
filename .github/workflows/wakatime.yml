@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  wakatime-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir -p pages/stats
           curl -s -H "Authorization: Basic $(echo -n $WAKATIME_API_KEY | base64)" \
-            https://wakatime.com/api/v1/users/current/stats/all_time\
+            https://wakatime.com/api/v1/users/current/stats/all_time \
             | jq '{
                 total_hours: (.data.total_seconds / 3600 | floor),
                 languages: [.data.languages[] | {name, hours: (.total_seconds / 3600 | floor)}],
@@ -42,7 +42,3 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-
-
-
-
