@@ -5,10 +5,16 @@ on:
     - cron: "0 */6 * * *" # a cada 6 horas
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -19,12 +25,12 @@ jobs:
         run: |
           mkdir -p docs/stats
           curl -s -H "Authorization: Basic $(echo -n $WAKATIME_API_KEY | base64)" \
-          https://wakatime.com/api/v1/users/current/stats/all_time \
-          | jq '{
-              total_hours: (.data.total_seconds / 3600 | floor),
-              languages: [.data.languages[] | {name, hours: (.total_seconds / 3600 | floor)}],
-              last_update: now | todate
-            }' > docs/stats/wakatime.json
+            https://wakatime.com/api/v1/users/current/stats/all_time \
+            | jq '{
+                total_hours: (.data.total_seconds / 3600 | floor),
+                languages: [.data.languages[] | {name, hours: (.total_seconds / 3600 | floor)}],
+                last_update: now | todate
+              }' > docs/stats/wakatime.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -32,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: pages
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
